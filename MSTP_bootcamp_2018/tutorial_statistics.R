@@ -79,3 +79,44 @@ ggplot(data=mycalib,
      xlab("Prediction probability bin") +
      ggtitle( paste("pvalue.HL = ", round(myhl$p.value, 4), sep=""))
 
+
+### survival analysis: Kaplan-Meier curve
+m1.surv = survfit( Surv(time,status) ~ sex, data = lung)
+print(m1.surv)
+m1.diff = survdiff(Surv(time, status) ~ sex, data = lung)
+m1.diff
+ggsurvplot(m.surv, data = lung, conf.int = TRUE, pval = TRUE, 
+           palette = c("orange", "royalblue"),
+           legend.labs =  c("Male", "Female"), surv.median.line = "hv",
+           risk.table = "abs_pct", risk.table.col = "strata", ggtheme = theme_bw() )
+
+### Check the cumulative hazard functions for a categorical variable
+m1.surv = survfit( Surv(time,status) ~ sex, data = lung)
+ggsurvplot(m1.surv, data = lung, fun = function(x) -log(-log(x)), 
+           palette = c("orange", "royalblue"),
+           legend.labs =  c("Male", "Female"), ggtheme = theme_bw() ) +
+      ylab("-log(- log(Survival))")
+
+
+### Check the cumulative hazard functions for a continuous variable
+m.coxPH <- coxph(Surv(time, status) ~ age*sex, data =  lung)
+summary(m.coxPH)
+check_PH <- cox.zph(m.coxPH, transform = "km")
+check_PH
+plot(check_PH, var = 1)
+abline(h = coef(m.coxPH)[1], col = "red", lwd = 2)
+
+
+
+
+sex_df <- with(lung,
+               data.frame(sex = c(1, 2), 
+                          age = rep(mean(age, na.rm = TRUE), 2),
+                          ph.ecog = c(1, 1)
+               )
+)
+m2.surv <- survfit(m.coxPH, newdata = sex_df)
+ggsurvplot(m2.surv, data = sex_df, conf.int = TRUE, 
+           palette = c("orange", "royalblue"), 
+           legend.labs= c("Male", "Female"),  surv.median.line = "hv",
+           ggtheme = theme_bw() )
