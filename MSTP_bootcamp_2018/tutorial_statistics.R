@@ -46,7 +46,9 @@ bwt <- with(birthwt, {
              ptd, ht = (ht > 0), ui = (ui > 0), ftv)
 })
 options(contrasts = c("contr.treatment", "contr.poly"))
-m1 = glm(low ~ ., binomial, bwt)
+m1 = glm(low ~ ., data = bwt, family = "binomial")
+summary(m1)$coef
+
 
 
 
