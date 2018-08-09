@@ -12,6 +12,31 @@ library(ROCR)
 
 ### Birth Weight data
 data(birthwt)
+bwt.df <- with(birthwt, {
+  race <- factor(race, labels = c("white", "black", "other"))
+  ptd <- factor(ptl > 0)
+  ftv <- factor(ftv)
+  levels(ftv)[-(1:2)] <- "2+"
+  data.frame(low = factor(low), bwt, age, lwt, race, smoke = (smoke > 0),
+             ptd, ht = (ht > 0), ui = (ui > 0), ftv)
+})
+
+
+### Exploratory data analysis
+ggplot(bwt.df, aes(x=race, y=bwt, fill=race)) + geom_boxplot(width=0.4) 
+ggplot(bwt.df, aes(x=smoke, y=bwt, fill=smoke))  + geom_boxplot(width=0.4) 
+ggplot(bwt.df, aes(x=ht, y=bwt, fill=ht)) + 
+  geom_boxplot(width=0.4) + xlab("History of hypertension")
+ggplot(bwt.df, aes(x=ui, y=bwt, fill=ui) ) + 
+  geom_boxplot(width=0.4) + xlab("Presence of uterine irritability")
+ggplot(bwt.df, aes(x=ftv, y=bwt, fill=ftv)) +
+   geom_boxplot(width=0.4) + xlab("Number of physician visits during the first trimester")
+ggplot(bwt.df, aes(x=ptd, y=bwt, fill=ptd)) + 
+  geom_boxplot(width=0.4)  + xlab("History of premature labors")
+
+
+
+### Fit a logistic regression model
 bwt <- with(birthwt, {
   race <- factor(race, labels = c("white", "black", "other"))
   ptd <- factor(ptl > 0)
@@ -20,14 +45,6 @@ bwt <- with(birthwt, {
   data.frame(low = factor(low), age, lwt, race, smoke = (smoke > 0),
              ptd, ht = (ht > 0), ui = (ui > 0), ftv)
 })
-
-
-### Exploratory data analysis
-
-
-
-
-### Fit a logistic regression model
 options(contrasts = c("contr.treatment", "contr.poly"))
 m1 = glm(low ~ ., binomial, bwt)
 
