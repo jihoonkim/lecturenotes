@@ -131,37 +131,19 @@ $(document).ready(function () {
 <div id="install-required-r-libraries" class="section level2">
 <h2>install required R libraries</h2>
 <pre class="r"><code>options(repos = &quot;http://cran.stat.ucla.edu&quot;)
-myPackageWishList = c( &quot;data.table&quot;, &quot;ggplot2&quot;, &quot;Hmisc&quot;, &quot;MASS&quot;, &quot;PredictABEL&quot;,
+myPackageWishList = c( &quot;data.table&quot;, &quot;ggplot2&quot;, &quot;Hmisc&quot;, &quot;MASS&quot;, 
                        &quot;ResourceSelection&quot;, &quot;rmeta&quot;, &quot;ROCR&quot;, &quot;survminer&quot;)
 for( i in myPackageWishList) {
   if (!is.element(i, installed.packages()[,1])) 
      install.packages(i, dep = TRUE)
   require( i, character.only = TRUE, warn.conflicts = FALSE, quietly = TRUE )
 }</code></pre>
+<pre><code>## ResourceSelection 0.3-2   2017-02-28</code></pre>
 <pre><code>## 
 ## Attaching package: 'gplots'</code></pre>
 <pre><code>## The following object is masked from 'package:stats':
 ## 
 ##     lowess</code></pre>
-<pre><code>## 
-## Attaching package: 'epitools'</code></pre>
-<pre><code>## The following object is masked from 'package:survival':
-## 
-##     ratetable</code></pre>
-<pre><code>## 
-## -----------------------------------------------------------
-## PBS Modelling 2.68.6 -- Copyright (C) 2005-2018 Fisheries and Oceans Canada
-## 
-## A complete user guide 'PBSmodelling-UG.pdf' is located at 
-## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/PBSmodelling/doc/PBSmodelling-UG.pdf
-## 
-## Packaged on 2017-12-19
-## Pacific Biological Station, Nanaimo
-## 
-## All available PBS packages can be found at
-## https://github.com/pbs-software
-## -----------------------------------------------------------</code></pre>
-<pre><code>## ResourceSelection 0.3-2   2017-02-28</code></pre>
 </div>
 <div id="load-dependent-libraries" class="section level2">
 <h2>load dependent libraries</h2>
@@ -169,7 +151,6 @@ for( i in myPackageWishList) {
 library(ggplot2)
 library(Hmisc)
 library(MASS)
-library(PredictABEL)
 library(ResourceSelection)
 library(rmeta)
 library(ROCR)
