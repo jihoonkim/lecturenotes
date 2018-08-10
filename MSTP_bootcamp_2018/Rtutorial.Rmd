@@ -9,7 +9,7 @@ output: html_document
 
 ```{r}
 options(repos = "http://cran.stat.ucla.edu")
-myPackageWishList = c( "data.table", "ggplot2", "Hmisc", "MASS", "PredictABEL",
+myPackageWishList = c( "data.table", "ggplot2", "Hmisc", "MASS", 
                        "ResourceSelection", "rmeta", "ROCR", "survminer")
 for( i in myPackageWishList) {
   if (!is.element(i, installed.packages()[,1])) 
@@ -26,7 +26,6 @@ library(data.table)
 library(ggplot2)
 library(Hmisc)
 library(MASS)
-library(PredictABEL)
 library(ResourceSelection)
 library(rmeta)
 library(ROCR)
