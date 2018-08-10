@@ -62,7 +62,7 @@ abline(a = 0, b = 1, lty = 2)
 
 
 ### model calibration
-myhl = hoslem.test(m1$y, m1$fitted.values, g=10)
+myhl = hoslem.test(m1$y, m1$fitted.values / 2, g=10)
 mycalib = data.frame(  
             predictionbin = factor(  c( rownames(myhl$observed), 
                                         rownames(myhl$observed)),
@@ -120,3 +120,11 @@ ggsurvplot(m2.surv, data = sex_df, conf.int = TRUE,
            palette = c("orange", "royalblue"), 
            legend.labs= c("Male", "Female"),  surv.median.line = "hv",
            ggtheme = theme_bw() )
+
+
+
+res.cox <- coxph(Surv(time, status) ~ age + sex + wt.loss, data =  lung)
+res.cox
+test.ph <- cox.zph(res.cox)
+test.ph
+ggcoxzph(test.ph)
